@@ -4,7 +4,7 @@ quiz_data <- list(
   list(q = "Hvad er svaret på alt?", p = "42|toogfyrre"),
   list(q = "Hvorfor blev der skrevet artikler om os i 1.G?", p = "varmluft|ballon|luftballon"),
   list(q = "Ved hvilken underviser var vi nødt til at evakuere lokalet?", p = "erik|fysik"),
-  list(q = "Hvilken scorereplik blev brugt hyppigt i gymnasiet?", p = "svømning"),
+  list(q = "Hvilken scorereplik blev brugt hyppigt i gymnasiet?", p = "svømning|svømmer"),
   list(q = "Hvad fik man at spise hvis man bestilte nr. 24b på Café Istanbul?", p = "(?=.*bearnaise)(?=.*banan)(?=.*pizza)"),
   list(q = "Hvad udfordrede afleveringen af SRP i 3.G?", p = "snestorm"),
   list(q = "Hvad var kælenavnet på vores kemilærer?", p = "(?=.*doktor)(?=.*død)")
@@ -67,16 +67,28 @@ server <- function(input, output, session) {
       )
     } else {
       tagList(
-        div(class = "score-text", "Quiz færdig!"),
+        div(class = "score-text", paste0("Quiz resultat: ", score(), " / ", length(quiz_data))),
         hr(),
-        div(style = "font-size: 40px; font-weight: bold;", paste0(score(), " / ", length(quiz_data))),
-        if(score() <= 3)
-          p("Det var noget lort!")
-        else if(score() <= 6)
-          p("Flot!")
-        else if(score() == 7)
-          p("Perfekt!"),
-        p("Vi mødes på hej 32 9600 Aars", style = "text-align: center;"),
+        #div(style = "font-size: 40px; font-weight: bold;", paste0(score(), " / ", length(quiz_data))),
+        if(score() == 0) {
+          p("Du er vist gået forkert i byen, ud med dig!")
+        } else if(score() <= 3) {
+          tagList(
+            p("Er du sikker på, at du er et ægte TM medlem?"),
+            p("Bevis det ved at møde op i Odense den 26 Sep 2026 kl 11.30!")
+          )
+        } else if(score() <= 6) {
+          tagList(
+            p("Det er tydeligt, at alderen trykker og minderne trænger til en genopfriskning."),
+            p("Du inviteres derfor til logens årlige TM arrangement i Odense den 26 Sep 2026 kl 11.30")
+          )
+        } else if(score() > 6) {
+          tagList(
+            p("Det er tydeligt, at du er et ægte TM medlem."),
+            p("Du inviteres hermed til logens årlige TM arrangement i Odense den 26 Sep 2026 kl 11.30")
+          )
+        },
+        p("Tilmelding sker ved at overføre 400 kr til MobilePay box 6960KS senest den 30 Juni 2026"),
         br(),
         actionButton("reset_btn", "Prøv igen", class = "btn-default")
       )
