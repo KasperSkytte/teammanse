@@ -1,25 +1,14 @@
 library(shiny)
 
 quiz_data <- list(
-  list(q = "What is the capital of France?", p = "paris"),
-  list(q = "Which planet is known as the Red Planet?", p = "mars"),
-  list(q = "What is 5 + 7?", p = "12"),
-  list(q = "Who wrote 'Romeo and Juliet'?", p = "shakespeare"),
-  list(q = "What is the chemical symbol for Water?", p = "h2o"),
-  list(q = "Which ocean is the largest?", p = "pacific"),
-  list(q = "What color are emeralds?", p = "green"),
-  list(q = "How many legs does a spider typically have?", p = "8"),
-  list(q = "Which gas do humans need to breathe to survive?", p = "oxygen"),
-  list(q = "What is the opposite of 'Cold'?", p = "hot")
+  list(q = "Hvad er svaret på alt?", p = "42|toogfyrre"),
+  list(q = "Hvorfor blev der skrevet artikler om os i 1.G?", p = "varmluft|ballon|luftballon"),
+  list(q = "Ved hvilken underviser var vi nødt til at evakuere lokalet?", p = "erik|fysik"),
+  list(q = "Hvilken scorereplik blev brugt hyppigt i gymnasiet?", p = "svømning"),
+  list(q = "Hvad fik man at spise hvis man bestilte nr. 24b på Café Istanbul?", p = "(?=.*bearnaise)(?=.*banan)(?=.*pizza)"),
+  list(q = "Hvad udfordrede afleveringen af SRP i 3.G?", p = "snestorm"),
+  list(q = "Hvad var kælenavnet på vores kemilærer?", p = "(?=.*doktor)(?=.*død)")
 )
-
-# - Hvad er svaret på alt? = 42/toogfyrre
-# - Hvorfor blev der skrevet artikler om os i 1.G? = Vi byggede kæmpe varmlufts-balloner 
-# - Ved hvilken underviser var vi nødt til at evakuere lokalet? = Fysikunderviser Erik. Han varmede en metalske op og der opstod ukendte dampe
-# - Hvilken scorereplik blev brugt hyppigt i gymnasiet? Har du gået til svømning
-# - Hvad fik man at spise hvis man bestilte nr. 24b på Café Istanbul? = pizza med bearnaise og banan
-# - Hvad udfordrede afleveringen af SRP i 3.G? = En massiv snestorm
-# - Hvad var kælenavnet på vores kemilærer? = Doktor Død
 
 ui <- fluidPage(
   tags$head(
@@ -43,15 +32,15 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   
   current_idx <- reactiveVal(1)
-  score <- reactiveVal(0)
-  quiz_finished <- reactiveVal(FALSE)
+  score <- reactiveVal(7)
+  quiz_finished <- reactiveVal(T)
   
   observeEvent(input$next_btn, {
     user_answer <- input$answer_input
     clean_user_answer <- tolower(user_answer)
     current_pattern <- quiz_data[[current_idx()]]$p
     
-    if (grepl(current_pattern, clean_user_answer)) {
+    if (grepl(current_pattern, clean_user_answer, perl = TRUE)) {
       score(score() + 1)
     }
     
@@ -72,19 +61,24 @@ server <- function(input, output, session) {
     if (!quiz_finished()) {
       tagList(
         div(class = "question-text", quiz_data[[current_idx()]]$q),
-        textInput("answer_input", label = "Your Answer:", value = ""),
+        textInput("answer_input", label = "Dit svar:", value = ""),
         br(),
-        actionButton("next_btn", "Next Question", class = "btn-primary btn-lg", width = "100%")
+        actionButton("next_btn", "Næste spørgsmål", class = "btn-primary btn-lg", width = "100%")
       )
     } else {
       tagList(
-        div(class = "score-text", "Quiz Complete!"),
+        div(class = "score-text", "Quiz færdig!"),
         hr(),
-        div(style = "font-size: 40px; font-weight: bold;", 
-            paste0(score(), " / ", length(quiz_data))),
-        p("Great effort!", style = "text-align: center;"),
+        div(style = "font-size: 40px; font-weight: bold;", paste0(score(), " / ", length(quiz_data))),
+        if(score() <= 3)
+          p("Det var noget lort!")
+        else if(score() <= 6)
+          p("Flot!")
+        else if(score() == 7)
+          p("Perfekt!"),
+        p("Vi mødes på hej 32 9600 Aars", style = "text-align: center;"),
         br(),
-        actionButton("reset_btn", "Try Again", class = "btn-default")
+        actionButton("reset_btn", "Prøv igen", class = "btn-default")
       )
     }
   })
