@@ -32,8 +32,8 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   
   current_idx <- reactiveVal(1)
-  score <- reactiveVal(7)
-  quiz_finished <- reactiveVal(T)
+  score <- reactiveVal(0)
+  quiz_finished <- reactiveVal(FALSE)
   
   observeEvent(input$next_btn, {
     user_answer <- input$answer_input
