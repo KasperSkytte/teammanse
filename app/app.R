@@ -1,13 +1,16 @@
 library(shiny)
 
 quiz_data <- list(
-  list(q = "Hvad er svaret på alt?", p = "42|toogfyrre"),
+  list(q = "Hvad hed vores gymnasie klasse?", p = "07-x|07x"),
   list(q = "Hvorfor blev der skrevet artikler om os i 1.G?", p = "varmluft|ballon|luftballon"),
   list(q = "Ved hvilken underviser var vi nødt til at evakuere lokalet?", p = "erik|fysik"),
   list(q = "Hvilken scorereplik blev brugt hyppigt i gymnasiet?", p = "svømning|svømmer"),
   list(q = "Hvad fik man at spise hvis man bestilte nr. 24b på Café Istanbul?", p = "(?=.*bearnaise)(?=.*banan)(?=.*pizza)"),
-  list(q = "Hvad udfordrede afleveringen af SRP i 3.G?", p = "snestorm"),
-  list(q = "Hvad var kælenavnet på vores kemilærer?", p = "(?=.*doktor)(?=.*død)")
+  list(q = "Hvad var førstepræmien i Torsdagsquizzen på Tribunen?", p = "(?=.*meter)(?=.*øl)"),
+  list(q = "Hvilket kemifagligt indhold var der på studieturen?", p = "vin"),
+  list(q = "Hvad udfordrede afleveringen af SRP i 3.G?", p = "snestorm|sne"),
+  list(q = "Hvad var kælenavnet på vores kemilærer?", p = "(?=.*doktor|.*dr|.*dr\\.)(?=.*død)"),
+  list(q = "Hvad er svaret på alt?", p = "42|toogfyrre")
 )
 
 ui <- fluidPage(
@@ -36,11 +39,10 @@ server <- function(input, output, session) {
   quiz_finished <- reactiveVal(FALSE)
   
   observeEvent(input$next_btn, {
-    user_answer <- input$answer_input
-    clean_user_answer <- tolower(user_answer)
+    user_answer <- tolower(input$answer_input)
     current_pattern <- quiz_data[[current_idx()]]$p
     
-    if (grepl(current_pattern, clean_user_answer, perl = TRUE)) {
+    if (grepl(current_pattern, user_answer, perl = TRUE)) {
       score(score() + 1)
     }
     
@@ -70,8 +72,8 @@ server <- function(input, output, session) {
         div(class = "score-text", paste0("Quiz resultat: ", score(), " / ", length(quiz_data))),
         hr(),
         #div(style = "font-size: 40px; font-weight: bold;", paste0(score(), " / ", length(quiz_data))),
-        if(score() == 0) {
-          p("Du er vist gået forkert i byen, ud med dig!")
+        if(score() <=1) {
+          p("Du er vist fået forkert i byen. Hvis du fastholder din TM relation, så prøv igen.")
         } else if(score() <= 3) {
           tagList(
             p("Er du sikker på, at du er et ægte TM medlem?"),
@@ -88,7 +90,8 @@ server <- function(input, output, session) {
             p("Du inviteres hermed til logens årlige TM arrangement i Odense den 26 Sep 2026 kl 11.30")
           )
         },
-        p("Tilmelding sker ved at overføre 400 kr til MobilePay box 6960KS senest den 30 Juni 2026"),
+        if(score() >= 2)
+          p("Tilmelding sker ved at overføre 400 kr til MobilePay box 6960KS senest den 30 Juni 2026"),
         br(),
         actionButton("reset_btn", "Prøv igen", class = "btn-default")
       )
