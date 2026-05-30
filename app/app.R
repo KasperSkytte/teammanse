@@ -1,8 +1,8 @@
 library(shiny)
 
 quiz_data <- list(
-  list(q = "Hvad hed vores gymnasie klasse?", p = "07-x|07x"),
-  list(q = "Hvorfor blev der skrevet artikler om os i 1.G?", p = "varmluft|ballon|luftballon"),
+  list(q = "Hvad hed vores gymnasie klasse?", p = "07-x|07x|07 x"),
+  list(q = "Hvorfor blev der skrevet artikler om os i 1.G?", p = "varmluft|ballon"),
   list(q = "Ved hvilken underviser var vi nødt til at evakuere lokalet?", p = "erik|fysik"),
   list(q = "Hvilken scorereplik blev brugt hyppigt i gymnasiet?", p = "svømning|svømmer"),
   list(q = "Hvad fik man at spise hvis man bestilte nr. 24b på Café Istanbul?", p = "(?=.*bearnaise)(?=.*banan)(?=.*pizza)"),
