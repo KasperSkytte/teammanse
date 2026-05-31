@@ -14,6 +14,7 @@ quiz_data <- list(
 )
 
 ui <- fluidPage(
+  title = "Team Manse Testen",
   tags$head(
     tags$style(HTML("
       body { background-color: #f8f9fa; }
@@ -73,7 +74,7 @@ server <- function(input, output, session) {
         hr(),
         #div(style = "font-size: 40px; font-weight: bold;", paste0(score(), " / ", length(quiz_data))),
         if(score() <=1) {
-          p("Du er vist fået forkert i byen. Hvis du fastholder din TM relation, så prøv igen.")
+          p("Du er vist gået forkert i byen. Hvis du vedholder din TM relation, så prøv igen.")
         } else if(score() <= 3) {
           tagList(
             p("Er du sikker på, at du er et ægte TM medlem?"),
@@ -87,6 +88,11 @@ server <- function(input, output, session) {
         } else if(score() > 6) {
           tagList(
             p("Det er tydeligt, at du er et ægte TM medlem."),
+            p("Du inviteres hermed til logens årlige TM arrangement i Odense den 26 Sep 2026 kl 11.30")
+          )
+        } else if(score() == 10) {
+          tagList(
+            p("Sådan! Du er det perfekte TM medlem!"),
             p("Du inviteres hermed til logens årlige TM arrangement i Odense den 26 Sep 2026 kl 11.30")
           )
         },
