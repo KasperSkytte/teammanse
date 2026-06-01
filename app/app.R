@@ -1,4 +1,5 @@
 library(shiny)
+library(shinytitle)
 
 quiz_data <- list(
   list(q = "Hvad hed vores gymnasie klasse?", p = "07-x|07x|07 x"),
@@ -14,7 +15,8 @@ quiz_data <- list(
 )
 
 ui <- fluidPage(
-  title = "Team Manse Testen",
+  title = "Team Manse Quiz",
+  use_shiny_title(),
   tags$head(
     tags$style(HTML("
       body { background-color: #f8f9fa; }
@@ -78,22 +80,22 @@ server <- function(input, output, session) {
         } else if(score() <= 3) {
           tagList(
             p("Er du sikker på, at du er et ægte TM medlem?"),
-            p("Bevis det ved at møde op i Odense den 26 Sep 2026 kl 11.30!")
+            p("Bevis det ved at møde op i Odense den 26. Sep 2026 kl. 11.30!")
           )
         } else if(score() <= 6) {
           tagList(
             p("Det er tydeligt, at alderen trykker og minderne trænger til en genopfriskning."),
-            p("Du inviteres derfor til logens årlige TM arrangement i Odense den 26 Sep 2026 kl 11.30")
+            p("Du inviteres derfor til logens årlige TM arrangement i Odense den 26. Sep 2026 kl. 11.30")
           )
         } else if(score() > 6) {
           tagList(
             p("Det er tydeligt, at du er et ægte TM medlem."),
-            p("Du inviteres hermed til logens årlige TM arrangement i Odense den 26 Sep 2026 kl 11.30")
+            p("Du inviteres hermed til logens årlige TM arrangement i Odense den 26. Sep 2026 kl. 11.30")
           )
         } else if(score() == 10) {
           tagList(
-            p("Sådan! Du er det perfekte TM medlem!"),
-            p("Du inviteres hermed til logens årlige TM arrangement i Odense den 26 Sep 2026 kl 11.30")
+            p("Du er X-traordinary!"),
+            p("Du inviteres hermed til logens årlige TM arrangement i Odense den 26. Sep 2026 kl. 11.30")
           )
         },
         if(score() >= 2)
