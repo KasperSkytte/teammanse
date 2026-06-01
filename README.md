@@ -7,3 +7,5 @@ shinylive::export(appdir = "app", destdir = "docs")
 # serve locally
 httpuv::runStaticServer("./docs", headers = c(`Access-Control-Allow-Origin` = "*"))
 ```
+
+Set app browser title manually in `docs/index.html`.

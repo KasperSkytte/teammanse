@@ -1,5 +1,4 @@
 library(shiny)
-library(shinytitle)
 
 quiz_data <- list(
   list(q = "Hvad hed vores gymnasie klasse?", p = "07-x|07x|07 x"),
@@ -16,7 +15,6 @@ quiz_data <- list(
 
 ui <- fluidPage(
   title = "Team Manse Quiz",
-  use_shiny_title(),
   tags$head(
     tags$style(HTML("
       body { background-color: #f8f9fa; }
