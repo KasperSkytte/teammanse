@@ -85,7 +85,7 @@ server <- function(input, output, session) {
             p("Det er tydeligt, at alderen trykker og minderne trænger til en genopfriskning."),
             p("Du inviteres derfor til logens årlige TM arrangement i Odense den 26. Sep 2026 kl. 11.30")
           )
-        } else if(score() > 6) {
+        } else if(score() <= 9) {
           tagList(
             p("Det er tydeligt, at du er et ægte TM medlem."),
             p("Du inviteres hermed til logens årlige TM arrangement i Odense den 26. Sep 2026 kl. 11.30")
