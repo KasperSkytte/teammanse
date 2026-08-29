@@ -1,28 +1,59 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Team Manse Quiz</title>
-    <script
-      src="./shinylive/load-shinylive-sw.js"
-      type="module"
-    ></script>
-    <script type="module">
-      import { runExportedApp } from "./shinylive/shinylive.js";
-      runExportedApp({
-        id: "root",
-        appEngine: "r",
-        relPath: "",
-      });
-    </script>
-    <link rel="stylesheet" href="./shinylive/style-resets.css" />
-    <link rel="stylesheet" href="./shinylive/shinylive.css" />
-    
-  </head>
-  <body>
-    
-    <div style="height: 100vh; width: 100vw" id="root"></div>
-    
-  </body>
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vintapperstræde, Odense</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f8f9fa;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    .card {
+      background: white;
+      padding: 40px 50px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 500px;
+    }
+    .message {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 15px;
+    }
+    .address {
+      font-size: 26px;
+      font-weight: bold;
+      color: #2c3e50;
+      margin: 0 0 25px;
+    }
+    a.map-link {
+      display: inline-block;
+      padding: 12px 24px;
+      background: #2c3e50;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    a.map-link:hover {
+      background: #1a252f;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="message">Vi glæder os til at se jer d. 26. September kl. 11.30 på:</div>
+    <div class="address">Vintapperstræde 37, 5000 Odense</div>
+    <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Vintapperstr%C3%A6de%2037%2C%205000%20Odense" target="_blank" rel="noopener">
+      Åbn i Google Maps
+    </a>
+  </div>
+</body>
 </html>
